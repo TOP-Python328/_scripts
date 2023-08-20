@@ -34,3 +34,33 @@ def calculator(num1: int, num2: int, operation: str) -> int | float:
 # >>> calculator(10, operation='*', num1=5)
 # ...
 # TypeError: calculator() got multiple values for argument 'num1'
+
+# >>> numbers_pairs = [(1, 9), (3, -7), (11, 0)]
+# >>>
+# >>> for pair in numbers_pairs:
+# ...     print(pair)
+# ...
+# (1, 9)
+# (3, -7)
+# (11, 0)
+# >>>
+# >>> for pair in numbers_pairs:
+# ...     print(calculator(*pair, '+'))
+# ...
+# 10
+# -4
+# 11
+
+# >>> operations_history = [
+# ...     {'num1': 1, 'operation': '+', 'num2': 9},
+# ...     {'num1': 3, 'operation': '+', 'num2': -7},
+# ...     {'num1': 11, 'operation': '+', 'num2': 0},
+# ... ]
+# >>>
+# >>> for oper in operations_history:
+# ...     print(calculator(**oper))
+# ...
+# 10
+# -4
+# 11
+

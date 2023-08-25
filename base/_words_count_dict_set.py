@@ -48,6 +48,9 @@ words_rate = {
 # for item in sorted(words_rate.items()):
     # print(item)
 
-for item in sorted(((v, k) for k, v in words_rate.items()), reverse=True):
+# for item in sorted(((v, k) for k, v in words_rate.items()), reverse=True):
+#     print(item)
+
+for item in sorted(words_rate.items(), key=(lambda word_rate: word_rate[1]), reverse=True):
     print(item)
 

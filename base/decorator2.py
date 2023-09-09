@@ -1,8 +1,10 @@
+from functools import wraps
 from time import perf_counter_ns as pc_ns
 
 
 def elapse(func_obj: 'function') -> 'function':
     """"""
+    @wraps(func_obj)
     def wrapper(*args, **kwargs):
         start = pc_ns()
         res = func_obj(*args, **kwargs)

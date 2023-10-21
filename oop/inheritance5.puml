@@ -1,0 +1,39 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 2
+
+hide class empty members
+
+class Vehicle {
+    +{static}wheels: <i>int</i>
+    +speed: <i>int</i>
+    __init__()
+    +move() → <i>str</i>
+}
+
+class Bicycle {
+    +{static}wheels: <i>int</i>
+}
+
+class Car
+
+class Train {
+    +{static}wheels: <i>int</i>
+    +move() → <i>str</i>
+}
+
+class Aircraft {
+    +{static}wheels: <i>int</i>
+    +ground_speed: <i>int</i>
+    +air_speed: <i>int</i>
+    __init__()
+    +move() → <i>str</i>
+}
+
+Vehicle <|-- Bicycle
+Vehicle <|-- Car
+Vehicle <|-- Train
+Vehicle <|-- Aircraft : "пример\nнеэффективного\n наследования"
+
+@enduml

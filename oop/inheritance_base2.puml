@@ -1,0 +1,28 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 2
+
+hide abstract empty members
+
+abstract list
+
+class Product {
+    +name: <i>str</i>
+    +produced: <i>date</i>
+    +expired: <i>date</i>
+    +is_expired() → <i>bool</i>
+    __repr__()
+}
+
+class Fridge {
+    <i>self: list[Product]</i>
+    __repr__()
+    append()
+    +clear_expired() → <i>None</i>
+}
+
+list <|-- Fridge
+Product -right-o Fridge
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+
+' !theme monokai_npp from ..\.styles
+scale 2
+
+object a {
+    attr = "атрибут A"
+}
+object b {
+    attr = "атрибут B"
+}
+object c {
+    attr = "атрибут A"
+}
+object d {
+    attr = "атрибут B"
+}
+object f {
+    attr = "атрибут B"
+}
+
+a <|-- c
+b <|-- c
+a <|-- d
+b <|-- d
+c <|-- f
+d <|-- f
+
+@enduml

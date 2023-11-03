@@ -1,0 +1,17 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 1.5
+
+hide abstract empty members
+hide class empty members
+
+abstract Exception
+
+Exception <|-- Parent1UserError
+Exception <|-- Parent2UserError
+Parent1UserError <|-- Child1UserError
+Parent1UserError <|-- Child2UserError
+Child2UserError <|-- SubChildUserError
+
+@enduml

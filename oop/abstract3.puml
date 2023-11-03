@@ -1,0 +1,50 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 2
+
+class Player {
+    +instrument: MusicalInstrument
+    +play() → <i>None</i>
+}
+
+abstract MusicalInstrument {
+    +{static}notes: <i>dict[str, float]</i>
+    +{abstract}play() → <i>bytes</i>
+}
+
+abstract Acoustic {
+    +lowest_tone: <i>str</i>
+    +highest_tone: <i>str</i>
+    +tone_in_range() → <i>bool</i>
+}
+abstract Synthetic {
+    +{abstract}modulate() → <i>bytes</i>
+}
+
+abstract Keyboard {
+    +mechanics: <i>str</i>
+    +attack() → <i>bytes</i>
+}
+' abstract String {
+    ' +strings: <i>tuple</i>
+' }
+
+class Piano {
+    #samples_dir_path: <i>Path</i>
+    +play() → <i>bytes</i>
+}
+
+MusicalInstrument <|-- Acoustic
+MusicalInstrument <|-- Synthetic
+
+Acoustic <|-- Keyboard
+' Acoustic <|-- String
+
+Keyboard <|-- Piano
+' String <|-- Viola
+' String <|-- Guitar
+
+Player o-right- MusicalInstrument
+
+@enduml

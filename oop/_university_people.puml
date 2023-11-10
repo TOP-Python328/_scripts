@@ -1,0 +1,123 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 1
+
+
+abstract dict
+
+
+enum ExamType {
+    CHECK
+    DIFF_CHECK
+    EXAMEN
+    PROJECT
+}
+
+enum Degree {
+    CANDIDATE
+    DOCTOR
+}
+
+
+class Contact << dataclass >> {
+    +mobile: <i>str</i>
+    +office: <i>str</i>
+    +email: <i>str</i>
+    +web: <i>str</i>
+    +telegram: <i>str</i>
+}
+
+
+abstract Person {
+    +last_name: <i>str</i>
+    +first_name: <i>str</i>
+    +patr_name: <i>str</i>
+    +birthdate: <i>date</i>
+    +contact: Contact
+}
+
+
+class GradeRecord << dataclass >> {
+    +semester: <i>int</i>
+    +date: <i>date</i>
+    +type: ExamType
+    +grade: <i>int</i>
+    +scale: <i>int</i>
+    +examiner: Teacher
+}
+
+
+class Gradebook {
+    <font size=12><font "Space Mono"><i>str</i>: GradeRecord</font>
+    ..
+    +id: <i>str</i>
+    --
+    +avg_semester_grade() → <i>float</i>
+}
+
+
+class Student {
+    +id: <i>str</i>
+    +semester: <i>int</i>
+    +gradebook: Gradebook
+    #stipendia: <i>dec</i>
+    ..<font size=12><i> setters  </i></font>..
+    +stipendia()
+}
+
+
+abstract Employee {
+    +position: <i>str</i>
+    +income: <i>dec</i>
+    +{abstract}calc_month_income() → <i>dec</i>
+}
+
+
+class Teacher {
+    +courses: <i>list[str]</i>
+    +degree: Degree | <i>None</i>
+    +professor: <i>bool</i>
+    +calc_month_income() → <i>dec</i>
+    +make_examination() → GradeRecord
+}
+
+
+class Administrator {
+    +head: Administrator
+    +subordinates: <i>list</i> [Employee]
+    +calc_month_income() → <i>dec</i>
+}
+
+
+hide abstract empty members
+hide enum empty members
+hide Contact empty members
+hide GradeRecord empty members
+
+
+dict <|-- Gradebook
+
+Person <|--- Student
+Person <|-- Employee
+
+Employee <|-- Teacher
+Employee <|-- Administrator
+
+Person o-left- Contact
+
+Student o-right- Gradebook
+
+Gradebook *-- GradeRecord
+Gradebook <.right. Teacher : "GradeRecord()"
+
+GradeRecord *-left- ExamType
+GradeRecord o-up- Teacher
+
+Teacher *-- Degree
+
+Administrator o-- Employee
+Administrator o-- Administrator
+
+
+@enduml

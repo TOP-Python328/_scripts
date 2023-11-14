@@ -1,0 +1,82 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 1
+
+
+abstract list1 as "list"
+abstract list2 as "list"
+abstract dict
+
+class Contact << dataclass >>
+
+abstract Person
+class Student
+abstract Employee
+class Teacher 
+class Administrator 
+
+class GradeRecord << dataclass >>
+class Gradebook
+
+abstract OrganizationLevel 
+class University << singleton >> 
+class HR << singleton >> 
+class Faculty 
+class Department 
+class Auditorium << dataclass >> 
+class Group 
+
+hide abstract empty members
+hide class empty members
+
+
+' left to right direction
+
+list1 <|-- OrganizationLevel
+list2 <|-- Group
+dict <|-- Gradebook
+
+OrganizationLevel <|-- University
+OrganizationLevel <|-- HR
+OrganizationLevel <|-- Faculty
+OrganizationLevel <|-- Department
+OrganizationLevel o-up- Contact
+OrganizationLevel o-- Administrator
+
+University o-left- Faculty
+University o-up- HR
+
+Faculty o-left- Department
+
+Department o-left- Group
+Department o-- Teacher
+Department o-- Auditorium
+
+Group o-left- Student
+Group o-up- Teacher
+
+Person <|--- Student
+Person <|-left- Employee
+Person o-up- Contact
+
+Employee <|-up- Teacher
+Employee <|-- Administrator
+
+Student o-left- Gradebook
+Student *-- EducationForm
+Student *-- ContractForm
+
+Gradebook *-right- GradeRecord
+Gradebook <.right. Teacher : "GradeRecord()"
+
+GradeRecord *-- ExamType
+GradeRecord o-up- Teacher
+
+Teacher *-up- Degree
+
+Administrator o-- Employee
+Administrator o-- Administrator
+
+
+@enduml

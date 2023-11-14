@@ -1,0 +1,225 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 0.7
+
+
+abstract list1 as "list"
+abstract list2 as "list"
+abstract dict
+
+
+enum ExamType {
+    CHECK
+    DIFF_CHECK
+    EXAMEN
+    PROJECT
+}
+
+enum EducationForm {
+    INTRAMURAL
+    EXTRAMURAL
+    REMOTE
+}
+
+enum ContractForm {
+    BUDGET
+    COMPANY
+    PERSONAL
+}
+
+enum Degree {
+    CANDIDATE
+    DOCTOR
+}
+
+
+class Contact << dataclass >> {
+    +mobile: <i>str</i>
+    +office: <i>str</i>
+    +email: <i>str</i>
+    +web: <i>str</i>
+    +telegram: <i>str</i>
+}
+
+
+abstract Person {
+    +last_name: <i>str</i>
+    +first_name: <i>str</i>
+    +patr_name: <i>str</i>
+    +birthdate: <i>date</i>
+    +contact: Contact
+}
+
+
+class GradeRecord << dataclass >> {
+    +semester: <i>int</i>
+    +date: <i>date</i>
+    +type: ExamType
+    +grade: <i>int</i>
+    +scale: <i>int</i>
+    +examiner: Teacher
+}
+
+
+class Gradebook {
+    <font size=12><font "Space Mono"><i>str</i>: GradeRecord</font>
+    ..
+    +id: <i>str</i>
+    --
+    +avg_semester_grade() → <i>float</i>
+}
+
+
+class Student {
+    +id: <i>str</i>
+    +form: EducationForm
+    +contract: ContractForm
+    +semester: <i>int</i>
+    +gradebook: Gradebook
+    #stipendia: <i>dec</i>
+    ..<font size=12><i> setters  </i></font>..
+    +stipendia()
+}
+
+
+abstract Employee {
+    +position: <i>str</i>
+    +income: <i>dec</i>
+    +{abstract}calc_month_income() → <i>dec</i>
+}
+
+
+class Teacher {
+    +courses: <i>list[str]</i>
+    +degree: Degree | <i>None</i>
+    +professor: <i>bool</i>
+    +calc_month_income() → <i>dec</i>
+    +make_examination() → GradeRecord
+}
+
+
+class Administrator {
+    +head: Administrator
+    +subordinates: <i>list</i> [Employee]
+    +calc_month_income() → <i>dec</i>
+}
+
+
+
+abstract OrganizationLevel {
+    +title: <i>str</i>
+    +description: <i>str</i>
+    +head: Administrator
+    #staff: <i>list</i> [Administrator]
+    +contact: Contact
+    ..<font size=12><i> getters  </i></font>..
+    +staff() → <i>list</i> [Administrator]
+}
+
+class Contact << dataclass >> {
+    +mobile: <i>str</i>
+    +office: <i>str</i>
+    +email: <i>str</i>
+    +web: <i>str</i>
+    +telegram: <i>str</i>
+}
+
+
+class University << singleton >> {
+    <font size=12><font "Space Mono">Faculty</font>
+    ..
+    +hr: HR
+    --
+    +change_head() → <i>None</i>
+}
+
+class HR << singleton >> {
+    +hire() → <i>None</i>
+    +fire() → <i>None</i>
+}
+
+class Faculty {
+    <font size=12><font "Space Mono">Department</font>
+    ..
+    --
+    +enroll_student() → <i>None</i>
+    +expel_student() → <i>None</i>
+}
+
+class Department {
+    <font size=12><font "Space Mono">Group</font>
+    ..
+    +teachers: <i>list</i> [Teacher]
+    +auditoria: <i>list</i> [Auditorium]
+}
+
+class Auditorium << dataclass >> {
+    +number: <i>str</i>
+    +seats: <i>int</i>
+    +building: <i>str</i>
+}
+
+class Group {
+    <font size=12><font "Space Mono">Student</font>
+    ..
+    +id: <i>str</i>
+    +chief: Student
+    +curator Teacher
+}
+
+
+hide abstract empty members
+hide enum empty members
+hide Contact empty members
+hide GradeRecord empty members
+hide Auditorium empty members
+
+
+list1 <|-- OrganizationLevel
+list2 <|-- Group
+dict <|-- Gradebook
+
+OrganizationLevel <|-- University
+OrganizationLevel <|-- HR
+OrganizationLevel <|-- Faculty
+OrganizationLevel <|-- Department
+OrganizationLevel o-up- Contact
+OrganizationLevel o-- Administrator
+
+University o-left- Faculty
+University o-up- HR
+
+Faculty o-left- Department
+
+Department o-left- Group
+Department o-- Teacher
+Department o-- Auditorium
+
+Group o-left- Student
+Group o-up- Teacher
+
+Person <|--- Student
+Person <|-left- Employee
+Person o-up- Contact
+
+Employee <|-up- Teacher
+Employee <|-- Administrator
+
+Student o-left- Gradebook
+Student *-- EducationForm
+Student *-- ContractForm
+
+Gradebook *-right- GradeRecord
+Gradebook <.up. Teacher : "GradeRecord()"
+
+GradeRecord *-- ExamType
+GradeRecord o-up- Teacher
+
+Teacher *-up- Degree
+
+Administrator o-- Employee
+Administrator o-- Administrator
+
+
+@enduml

@@ -1,7 +1,7 @@
 @startuml
 
 !theme monokai_npp from ..\.styles
-scale 1
+scale 1.2
 
 
 abstract dict
@@ -12,6 +12,18 @@ enum ExamType {
     DIFF_CHECK
     EXAMEN
     PROJECT
+}
+
+enum EducationForm {
+    INTRAMURAL
+    EXTRAMURAL
+    REMOTE
+}
+
+enum ContractForm {
+    BUDGET
+    COMPANY
+    PERSONAL
 }
 
 enum Degree {
@@ -59,6 +71,8 @@ class Gradebook {
 
 class Student {
     +id: <i>str</i>
+    +form: EducationForm
+    +contract: ContractForm
     +semester: <i>int</i>
     +gradebook: Gradebook
     #stipendia: <i>dec</i>
@@ -107,6 +121,8 @@ Employee <|-- Administrator
 Person o-left- Contact
 
 Student o-right- Gradebook
+Student *-- EducationForm
+Student *-- ContractForm
 
 Gradebook *-- GradeRecord
 Gradebook <.right. Teacher : "GradeRecord()"

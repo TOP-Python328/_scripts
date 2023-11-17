@@ -1,0 +1,76 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 1.5
+
+enum Color {
+    GREEN
+    BLUE
+    RED
+}
+
+enum Size {
+    SMALL
+    MEDIUM
+    LARGE
+}
+
+class Product << dataclass >> {
+    +name: <i>str</i>
+    +color: Color
+    +size: Size
+    +...
+}
+
+' wrong
+' class ProductBase {
+    ' +products: <i>list</i> [Product]
+    ' +filter_by_color() → <i>Generator</i> [Product]
+    ' +filter_by_size() → <i>Generator</i> [Product]
+    ' +filter_by_color_and_size() → <i>Generator</i> [Product]
+    ' +{method}...
+' }
+
+' correct
+abstract Criteria {
+    +{abstract}match() → <i>bool</i>
+}
+
+class ColorCriteria {
+    +color: Color
+    +match() → <i>bool</i>
+}
+
+class SizeCriteria {
+    +size: Color
+    +match() → <i>bool</i>
+}
+
+class AndCriteria {
+    +criterias: <i>tuple</i> [Criteria]
+    +match() → <i>bool</i>
+}
+
+class ProductBase {
+    +products: <i>list</i> [Product]
+    +filter() → <i>Generator</i> [Product]
+}
+
+class NewCriteria as "...Criteria"
+
+hide abstract empty members
+hide enum empty members
+hide class empty members
+
+Product *-left- Color
+Product *-right- Size
+
+ProductBase o-up- Product
+ProductBase .right.> Criteria
+
+Criteria <|-- ColorCriteria
+Criteria <|-- SizeCriteria
+Criteria <|-- AndCriteria
+Criteria <|-- NewCriteria
+
+@enduml

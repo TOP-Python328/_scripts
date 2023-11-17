@@ -1,0 +1,27 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 2
+
+' wrong
+' class Journal {
+    ' +{static}default_format: str
+    ' +{static}default_path: Path
+    ' +entries: <i>list[str]</i>
+    ' +add_entry() → <i>None</i>
+    ' +save_file() → <i>None</i>
+' }
+
+' correct
+class Journal {
+    +{static}default_path: Path
+    +entries: <i>list[str]</i>
+    +add_entry() → <i>None</i>
+}
+
+class FileIO {
+    +{static}default_format: str
+    +{static}save_file() → <i>None</i>
+}
+
+@enduml

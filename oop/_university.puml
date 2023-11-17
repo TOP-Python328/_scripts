@@ -1,7 +1,7 @@
 @startuml
 
 !theme monokai_npp from ..\.styles
-scale 0.7
+scale 1
 
 
 abstract list1 as "list"
@@ -34,7 +34,7 @@ enum Degree {
 }
 
 
-class Contact << dataclass >> {
+class " Contact " as Contact << dataclass >> {
     +mobile: <i>str</i>
     +office: <i>str</i>
     +email: <i>str</i>
@@ -63,7 +63,7 @@ class GradeRecord << dataclass >> {
 
 
 class Gradebook {
-    <font size=12><font "Space Mono"><i>str</i>: GradeRecord</font>
+    <font size=11><font "IBM Plex Mono">{str: GradeRecord}</font>
     ..
     +id: <i>str</i>
     --
@@ -80,6 +80,7 @@ class Student {
     #stipendia: <i>dec</i>
     ..<font size=12><i> setters  </i></font>..
     +stipendia()
+    --
 }
 
 
@@ -117,17 +118,9 @@ abstract OrganizationLevel {
     +staff() → <i>list</i> [Administrator]
 }
 
-class Contact << dataclass >> {
-    +mobile: <i>str</i>
-    +office: <i>str</i>
-    +email: <i>str</i>
-    +web: <i>str</i>
-    +telegram: <i>str</i>
-}
-
 
 class University << singleton >> {
-    <font size=12><font "Space Mono">Faculty</font>
+    <font size=11><font "IBM Plex Mono">[Faculty]</font>
     ..
     +hr: HR
     --
@@ -140,7 +133,7 @@ class HR << singleton >> {
 }
 
 class Faculty {
-    <font size=12><font "Space Mono">Department</font>
+    <font size=11><font "IBM Plex Mono">[Department]</font>
     ..
     --
     +enroll_student() → <i>None</i>
@@ -148,10 +141,11 @@ class Faculty {
 }
 
 class Department {
-    <font size=12><font "Space Mono">Group</font>
+    <font size=11><font "IBM Plex Mono">[Group]</font>
     ..
     +teachers: <i>list</i> [Teacher]
     +auditoria: <i>list</i> [Auditorium]
+    --
 }
 
 class Auditorium << dataclass >> {
@@ -161,11 +155,12 @@ class Auditorium << dataclass >> {
 }
 
 class Group {
-    <font size=12><font "Space Mono">Student</font>
+    <font size=11><font "IBM Plex Mono">[Student]</font>
     ..
     +id: <i>str</i>
     +chief: Student
     +curator Teacher
+    --
 }
 
 
@@ -176,49 +171,49 @@ hide GradeRecord empty members
 hide Auditorium empty members
 
 
-list1 <|-- OrganizationLevel
+list1 <|-left- OrganizationLevel
 list2 <|-- Group
-dict <|-- Gradebook
+dict <|-right- Gradebook
 
-OrganizationLevel <|-- University
+OrganizationLevel <|-up- University
 OrganizationLevel <|-- HR
-OrganizationLevel <|-- Faculty
-OrganizationLevel <|-- Department
-OrganizationLevel o-up- Contact
+OrganizationLevel <|-up- Faculty
+OrganizationLevel <|-up- Department
+OrganizationLevel o-left- Contact
 OrganizationLevel o-- Administrator
 
 University o-left- Faculty
-University o-up- HR
+University o-- HR
 
 Faculty o-left- Department
 
 Department o-left- Group
-Department o-- Teacher
-Department o-- Auditorium
+Department o--- Teacher
+Department o-up- Auditorium
 
-Group o-left- Student
-Group o-up- Teacher
+Group o-- Student
+Group o--- Teacher
 
-Person <|--- Student
-Person <|-left- Employee
-Person o-up- Contact
+Person <|-right- Student
+Person <|-- Employee
+Person o-right- Contact
 
-Employee <|-up- Teacher
-Employee <|-- Administrator
+Employee <|-left- Teacher
+Employee <|-right- Administrator
 
-Student o-left- Gradebook
-Student *-- EducationForm
-Student *-- ContractForm
+Student o-- Gradebook
+Student *-up- EducationForm
+Student *-up- ContractForm
 
-Gradebook *-right- GradeRecord
-Gradebook <.up. Teacher : "GradeRecord()"
+Gradebook *-- GradeRecord
+Gradebook <.right. Teacher : "GradeRecord()"
 
-GradeRecord *-- ExamType
+GradeRecord *-left- ExamType
 GradeRecord o-up- Teacher
 
-Teacher *-up- Degree
+Teacher *-- Degree
 
-Administrator o-- Employee
+Administrator o-left- Employee
 Administrator o-- Administrator
 
 

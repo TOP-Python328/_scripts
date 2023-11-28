@@ -1,0 +1,29 @@
+@startuml
+
+!theme monokai_npp from ..\..\.styles
+scale 1.2
+
+hide abstract empty members
+hide class empty members
+
+abstract Material {
+    +{static}hits: <i>float</i>
+}
+
+abstract Building {
+    +{static}base_hitpoints: <i>int</i>
+    +material: Material
+    +hitpoints: <i>int</i>
+    +name: <i>str</i>
+}
+
+Building <|-up- Watchtower
+Building <|-up- Wall
+Building <|-up- Mill
+Building o-- Material
+Material <|-- Straw
+Material <|-- Wood
+Material <|-- Cobblestone
+Material <|-- Brick
+
+@enduml

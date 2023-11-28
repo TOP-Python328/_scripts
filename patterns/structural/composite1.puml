@@ -1,0 +1,32 @@
+@startuml
+
+!theme monokai_npp from ..\..\.styles
+scale 1.5
+
+abstract VectorGraphicObject {
+    +render()
+}
+class Line {
+    +name: <i>str</i>
+    +length: <i>float</i>
+    +render()
+}
+class Text {
+    +name: <i>str</i>
+    +text: <i>str</i>
+    +render()
+}
+class Group {
+    +name: <i>str</i>
+    #elements: <i>list</i> [VectorGraphicObject]
+    +add_elements()
+    +render()
+}
+
+VectorGraphicObject <|-- Line
+VectorGraphicObject <|-- Text
+VectorGraphicObject <|-- Group
+
+Group o-- VectorGraphicObject
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+
+' !theme monokai_npp from ..\..\.styles
+scale 2
+
+abstract list
+
+hide list empty members
+
+class Connectable {
+    +connect_to()
+}
+
+hide Connectable empty members
+
+class Neuron {
+    +name: <i>str</i>
+    +inputs: <i>list</i> [Neuron]
+    +outputs: <i>list</i> [Neuron]
+    __iter__()
+    +show_connections()
+}
+
+class NeuronLayer {
+    +name: <i>str</i>
+}
+
+Connectable <|-- Neuron
+list <|-- NeuronLayer
+Connectable <|-- NeuronLayer
+NeuronLayer o-left- Neuron
+
+@enduml

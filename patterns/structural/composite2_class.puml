@@ -1,0 +1,30 @@
+@startuml
+
+' !theme monokai_npp from ..\..\.styles
+scale 2
+
+class Neuron {
+    +name: <i>str</i>
+    +inputs: <i>list</i> [Neuron]
+    +outputs: <i>list</i> [Neuron]
+    __iter__()
+    +connect_to()
+    +show_connections()
+}
+
+abstract list
+
+hide list empty members
+
+class NeuronLayer {
+    <font size=11><font "IBM Plex Mono">Neuron</font>
+    --
+    +name: <i>str</i>
+    --
+    +connect_to()
+}
+
+list <|-- NeuronLayer
+NeuronLayer o-left- Neuron
+
+@enduml

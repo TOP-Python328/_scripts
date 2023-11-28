@@ -1,0 +1,24 @@
+@startuml
+
+!theme monokai_npp from ..\..\.styles
+scale 2
+
+frame nl1 as "  слой 1   " {
+    circle nl1_1 as "нейрон 1"
+    circle nl1_2 as "нейрон 2"
+}
+frame nl2 as "  слой 2   " {
+   circle nl2_1 as "нейрон 1"
+   circle nl2_2 as "нейрон 2"
+   circle nl2_3 as "нейрон 3"
+}
+
+nl1_1 --> nl2_1
+nl1_1 --> nl2_2
+nl1_1 --> nl2_3
+
+nl1_2 --> nl2_1
+nl1_2 --> nl2_2
+nl1_2 --> nl2_3
+
+@enduml

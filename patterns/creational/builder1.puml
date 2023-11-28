@@ -1,0 +1,26 @@
+@startuml
+
+!theme monokai_npp from ..\..\.styles
+scale 1.75
+
+class HTMLTag {
+    +name: <i>str</i>
+    +value: <i>str</i>
+    #str() → <i>str</i>
+    #nested: <i>list</i> [HTMLTag]
+    +nested() → <i>None</i>
+    +{static}create() → HTMLBuilder
+}
+class HTMLBuilder {
+    +root: HTMLTag
+    #parent: HTMLBuilder
+    +nested() → HTMLBuilder
+    +sibling() → HTMLBuilder
+    +build() → HTMLTag
+}
+
+HTMLTag::nested o-- HTMLTag
+HTMLBuilder::parent o-- HTMLBuilder
+HTMLBuilder o-left- HTMLTag
+
+@enduml

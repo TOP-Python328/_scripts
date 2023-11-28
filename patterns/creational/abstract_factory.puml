@@ -1,0 +1,57 @@
+@startuml
+
+!theme monokai_npp from ..\..\.styles
+scale 1.25
+
+abstract Drink {
+    DRINK: <i>bool</i>
+    +{abstract}drink()
+}
+class Tea {
+    +drink()
+}
+class Coffee {
+    +drink()
+}
+
+abstract DrinkFactory {
+    +{abstract}prepare() → Drink
+}
+class TeaFactory {
+    +prepare() → Tea
+}
+class CoffeeFactory {
+    +prepare() → Coffee
+}
+
+class HotDrinkMachine {
+    +{static}available: AvailableDrinks
+    +factories: <i>dict</i> [AvailableDrinks, DrinkFactory]
+    +print_drinks() → <i>None</i>
+    +choose_drink() → <i>int</i>
+    +choose_amount() → <i>int</i>
+    +make_drink() → Drink
+}
+
+enum AvailableDrinks << functional, dynamic >> {
+    Tea
+    Coffee
+    ...
+}
+
+hide abstract empty members
+hide class empty members
+hide enum empty members
+
+Drink <|-left- Tea
+Drink <|-right- Coffee
+
+DrinkFactory <|-left- TeaFactory
+DrinkFactory <|-right- CoffeeFactory
+
+DrinkFactory ..> Drink
+
+HotDrinkMachine *-right- AvailableDrinks
+HotDrinkMachine o-- DrinkFactory
+
+@enduml

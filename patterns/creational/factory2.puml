@@ -1,0 +1,44 @@
+@startuml
+
+!theme monokai_npp from ..\..\.styles
+scale 1.3
+
+abstract Person {
+    +name: <i>str</i>
+    +birthdate: <i>date</i>
+    ..<font size=12><i> getters </i></font>..
+    +age → <i>int</i>
+    ..<font size=12><i> methods </i></font>..
+    __str__()
+}
+class Employee {
+    +position: <i>str</i>
+    +income: <i>dec</i>
+    __str__()
+}
+class Candidate {
+    +cv: <i>bytes</i>
+    +expert1: <i>bool</i>
+    +expert2: <i>bool</i>
+    +final: <i>bool</i>
+    __bool__()
+    __str__()
+}
+
+class Factory {
+    +age_min: <i>int</i>
+    +age_max: <i>int</i>
+    +{static}create_candidate() → Candidate
+    +tech_meeting1() → <i>None</i>
+    +tech_meeting2() → <i>None</i>
+    +final_meeting() → <i>None</i>
+    +hire_candidate() → Employee | Candidate
+}
+
+Person <|-- Employee
+Person <|-- Candidate
+
+Factory .left.> Candidate
+Factory .right.> Employee
+
+@enduml

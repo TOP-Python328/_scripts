@@ -1,0 +1,55 @@
+@startuml
+
+!theme monokai from ..\..\.styles
+
+'skinparam linetype ortho
+
+hide abstract empty members
+
+abstract Patient {
+    +name: <i>str</i>
+    #monitors: <i>list</i>[Monitor]
+    +{abstract}get_parameter()
+    +{abstract}set_parameter()
+    +add_monitor()
+    +remove_monitor()
+    +update_monitors()
+}
+
+class COVIDPatient {
+    #parameters: <i>dict</i>
+    +get_parameter()
+    +set_parameter()
+}
+
+abstract Monitor {
+    +{abstract}update()
+    +{static}info_message()
+    +{static}warn_message()
+    +{static}emrg_message()
+}
+
+class Thermometer {
+    +update()
+}
+class Heartbeat {
+    +update()
+}
+class Oxymeter {
+    +update()
+}
+
+Patient <|-- COVIDPatient
+Monitor <|-- Thermometer
+Monitor <|-- Heartbeat
+Monitor <|-- Oxymeter
+
+'COVIDPatient::set_parameter --> Patient::update_monitors
+Patient <-- COVIDPatient::set_parameter
+
+Patient o-right- Monitor
+'Patient::update_monitors -right-> Monitor::update
+Patient -right-> Monitor
+
+
+@enduml

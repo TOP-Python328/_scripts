@@ -35,7 +35,8 @@ class Cat:
         return [cls() for _ in range(rr(2, 5))]
 
 
-yara = Cat('Яра', 'серо-полосатая')
+if __name__ == '__main__':
+    yara = Cat('Яра', 'серо-полосатая')
 
 # >>> yara
 # <Яра: серо-полосатая>

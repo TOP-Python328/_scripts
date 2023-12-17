@@ -1,0 +1,63 @@
+@startuml
+
+scale 2
+
+class FileIO {
+    +{static}default_path: Path
+    +history_log: Path
+    +write_operation() → None
+    +read_operation() → str
+    +read_all() → str
+}
+
+abstract list
+hide abstract empty members
+
+class Operations {
+    __call__() → None
+}
+hide class empty members
+
+class Application {
+    -{static}priorities: tuple[str]
+    #operations: Operations
+    +get_expression() → str
+    -parse_expression() → None
+    +show_history(all: bool = False) → None
+    +show_result() → None
+}
+
+abstract Expression {
+    +left_operand: Expression | Number
+    +right_operand: Expression | Number
+    +operation: str
+    +{abstract}calculate() → Number
+}
+class Add {
+    +calculate() → Number
+}
+class Sub {
+    +calculate() → Number
+}
+class Mul {
+    +calculate() → Number
+}
+class Div {
+    +calculate() → Number
+}
+
+left to right direction
+
+list <|-right- Operations
+
+Application *-- Operations
+Application .right.> FileIO
+
+Operations o-right- Expression
+
+Expression <|-- Add
+Expression <|-- Sub
+Expression <|-- Mul
+Expression <|-- Div
+
+@enduml

@@ -1,0 +1,101 @@
+@startuml
+
+!theme monokai_npp from ..\..\.styles
+scale 2
+
+skinparam sequenceMessageAlign center
+
+
+participant "~__main__" as main order 0
+control "Strong\nGoblin" as goblin order 15
+boundary Game as game order 10
+control modifiers order 5
+
+
+create entity dam order 1
+main -> dam : ~__init__()
+activate dam
+dam ->o modifiers
+deactivate dam
+
+create entity idm order 2
+main -> idm : ~__init__()
+activate idm
+idm ->o modifiers
+deactivate idm
+
+main -> goblin : ~__str__()
+activate goblin
+
+goblin -> goblin : attack()
+activate goblin
+
+create entity "query" as q1 order 3
+goblin -> q1 : Parameter.ATTACK
+
+goblin -> game : calc_modified_value()
+activate game
+
+game -> modifiers : modifiers()
+activate modifiers
+
+modifiers -> dam : handle()
+activate dam
+dam -> q1 : value = ...
+return None
+
+modifiers -> idm : handle()
+activate idm
+idm -> q1 : value = ...
+return None
+
+modifiers --> game : None
+deactivate modifiers
+
+game --> goblin : None
+deactivate game
+
+'goblin -> q1
+'q1 --> goblin : value
+
+return query.value
+goblin -> q1 !!
+
+goblin -> goblin : defense()
+activate goblin
+
+create entity "query" as q2 order 4
+goblin --> q2 : Parameter.DEFENSE
+
+goblin -> game : calc_modified_value()
+activate game
+
+game -> modifiers : modifiers()
+activate modifiers
+
+modifiers -> dam : handle()
+activate dam
+dam -> q2 : value = ...
+deactivate dam
+
+modifiers -> idm : handle()
+activate idm
+idm -> q2 : value = ...
+deactivate idm
+
+modifiers --> game : None
+deactivate modifiers
+
+game --> goblin : None
+deactivate game
+
+'goblin -> q2
+'q2 --> goblin : value
+
+return query.value
+goblin -> q2 !!
+
+goblin --> main
+deactivate goblin
+
+@enduml

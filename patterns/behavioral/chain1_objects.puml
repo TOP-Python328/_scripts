@@ -1,0 +1,30 @@
+@startuml
+
+' !theme monokai_npp from ..\..\.styles
+scale 2
+
+legend top
+    экземпляры:
+end legend
+
+object root {
+    previous = <i>None</i>
+    next = mod1
+}
+object mod1 {
+    previous = root
+    next = mod2
+}
+object mod2 {
+    previous = mod1
+    next = <i>None</i>
+}
+
+root::next --> mod1
+mod1::previous --> root
+mod1::next --> mod2
+mod2::previous --> mod1
+
+mod1 -[hidden]- mod2
+
+@enduml

@@ -1,0 +1,87 @@
+@startuml
+
+!theme monokai_npp from ..\..\.styles
+scale 2
+
+'skinparam linetype ortho
+
+hide enum empty members
+hide abstract empty members
+hide class empty members
+
+enum Parameter {
+    ATTACK
+    DEFENSE
+}
+
+abstract list
+
+class Modifiers {
+    __call__()
+}
+
+class Query {
+    +creature: Creature
+    +parameter: Parameter
+    +value: <i>int</i>
+}
+
+class Game {
+    +modifiers: Modifiers
+    +calc_modified_value() → <i>None</i>
+}
+
+class Creature {
+    +game: Game
+    +name: <i>str</i>
+    +initial_attack: <i>int</i>
+    +initial_defense: <i>int</i>
+    ..<font size=12><i> getters </i></font>..
+    +attack → <i>int</i>
+    +defense → <i>int</i>
+    ..<font size=12><i> methods </i></font>..
+    __str__()
+}
+
+abstract CreatureModifier {
+    +game: Game
+    +creature: Creature
+    +{abstract}handle() → <i>None</i>
+    +remove()
+    __enter__()
+    __exit__()
+}
+
+class DoubleAttackModifier {
+    +handle() → <i>None</i>
+}
+
+class IncreaseDefenseModifier {
+    +handle() → <i>None</i>
+}
+
+list <|-- Modifiers
+
+CreatureModifier <|-up- DoubleAttackModifier
+CreatureModifier <|-up- IncreaseDefenseModifier
+
+'Game::modifiers o-right- Modifiers
+Game o-right- Modifiers
+'Game::calc_modified_value .right.> Modifiers
+Game .right.> Modifiers
+
+CreatureModifier o-right- Game
+CreatureModifier o-- Creature
+'CreatureModifier::handle .left.> Parameter
+CreatureModifier .left.> Parameter
+'CreatureModifier::handle -left-> Query::value
+CreatureModifier -down-> Query
+
+Query o-- Creature
+Query o-up- Parameter
+
+Creature o-up- Game
+Creature::attack .left.> Parameter
+Creature::defense .left.> Parameter
+
+@enduml

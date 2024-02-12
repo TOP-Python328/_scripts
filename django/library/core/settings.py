@@ -19,6 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
+WSGI_APPLICATION = 'core.wsgi.application'
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-u^n)a3llg*d28-j&j3=s+r_42#^sbs%z+04m)(k+&yv18&^zzs'
 
@@ -26,6 +29,8 @@ SECRET_KEY = 'django-insecure-u^n)a3llg*d28-j&j3=s+r_42#^sbs%z+04m)(k+&yv18&^zzs
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+ROOT_URLCONF = 'core.urls'
 
 
 # Application definition
@@ -54,7 +59,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -72,8 +76,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -81,7 +83,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'database.sqlite3',
     }
 }
 
@@ -108,12 +110,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'ru-ru'
 USE_I18N = True
 
+TIME_ZONE = 'Asia/Yekaterinburg'
 USE_TZ = True
 
 
@@ -122,7 +122,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

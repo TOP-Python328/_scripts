@@ -1,19 +1,21 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Каталог авторов</title>
-  </head>
-  <body>
-    <div>
-      <table cellpadding=20>
-        {% for author in authors %}
-          <tr>
-            <td>
-              <a href="authors/{{ author.url }}">{{ author }}</a>
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
-    </div>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Каталог авторов
+{% endblock title %}
+
+
+{% block content %}
+  <div align="left">
+    <table cellpadding=20>
+      {% for author in authors %}
+        <tr>
+          <td>
+            <a href="authors/{{ author.url }}">{{ author }}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock content %}

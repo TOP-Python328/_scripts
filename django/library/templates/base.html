@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<!-- базовый шаблон -->
+<html>
+  <head>
+    <title>
+      {% block title %}
+      {% endblock title %}
+    </title>
+    {% block extra_head %}
+    {% endblock extra_head %}
+  </head>
+  <body>
+    <div align="center">
+      {% block content %}
+        <h1>Интернет-каталог библиотеки №7 им. Чернышевского</h1>
+      {% endblock content %}
+    </div>
+  </body>
+</html>

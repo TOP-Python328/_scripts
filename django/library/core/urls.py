@@ -17,6 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from catalog import views
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    path('', views.main, name='main'),
+    path('authors', views.author_catalog, name='author_catalog'),
+    path('authors/<str:name>', views.author),
 ]

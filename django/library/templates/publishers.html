@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+  Каталог издательств
+{% endblock title %}
+
+
+{% block content %}
+  <div align="left">
+    <table cellpadding=25>
+      {% for pub in pubs %}
+        <tr>
+          <td>
+            <a href="publishers/{{ pub.url }}">{{ pub|stringformat:"r" }}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock content %}

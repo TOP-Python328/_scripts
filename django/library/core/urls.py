@@ -24,6 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('', views.main, name='main'),
+    
     path('authors', views.author_catalog, name='author_catalog'),
     path('authors/<str:name>', views.author),
+    
+    path('publishers', views.pubs, name='pub_catalog'),
+    path('publishers/<str:name>', views.pub),
 ]

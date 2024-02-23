@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <h2>
+    {% block heading %}
+    {% endblock heading %}
+  </h2>
+  <div align="left">
+    <table cellpadding=15>
+      {% for book in books %}
+        <tr><td>{{ book.title }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock content %}

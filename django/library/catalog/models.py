@@ -1,4 +1,7 @@
 from django.db import models
+from transliterate import translit
+
+from functools import cached_property
 
 
 class Author(models.Model):
@@ -7,6 +10,10 @@ class Author(models.Model):
     
     last_name = models.CharField(max_length=30)
     first_name = models.CharField(max_length=30)
+    
+    @cached_property
+    def url(self) -> str:
+        return translit(self.last_name, 'ru', reversed=True).lower()
     
     def __repr__(self):
         return f'{self.first_name} {self.last_name}'
@@ -34,6 +41,10 @@ class Publisher(models.Model):
     name = models.CharField(max_length=150, unique=True)
     authors = models.ManyToManyField(Author)
     books = models.ManyToManyField(Book)
+    
+    @cached_property
+    def url(self) -> str:
+        return translit(self.name, 'ru', reversed=True).lower()
     
     def __repr__(self):
         return self.name

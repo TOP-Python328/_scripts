@@ -6,10 +6,21 @@
       {% block title %}
       {% endblock title %}
     </title>
+    <style>
+      .menu {
+        background-color: #D5D595;
+        font-size: 16pt;
+      }
+    </style>
     {% block extra_head %}
     {% endblock extra_head %}
   </head>
   <body>
+    {% block header %}
+      <div class="menu" align="center">
+        {% include 'menu.html' %}
+      </div>
+    {% endblock header %}
     <div align="center">
       {% block content %}
         <h1>Интернет-каталог библиотеки №7 им. Чернышевского</h1>

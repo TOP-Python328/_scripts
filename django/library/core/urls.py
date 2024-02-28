@@ -26,8 +26,8 @@ urlpatterns = [
     path('', views.main, name='main'),
     
     path('authors', views.author_catalog, name='author_catalog'),
-    path('authors/<str:name>', views.author),
+    path('authors/<str:name>', views.author, name='author'),
     
     path('publishers', views.pubs, name='pub_catalog'),
-    path('publishers/<str:name>', views.pub),
+    path('publishers/<str:name>', views.pub, name='publisher'),
 ]

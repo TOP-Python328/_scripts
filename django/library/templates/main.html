@@ -10,8 +10,8 @@
   <h2>Добро пожаловать в интернет-каталог библиотеки №7 им. Чернышевского</h2>
   <table cellpadding=30>
     <tr>
-      <td><a href="authors">Авторы</a></td>
-      <td><a href="publishers">Издательства</a></td>
+      <td><a href="{% url 'author_catalog' %}">Авторы</a></td>
+      <td><a href="{% url 'pub_catalog' %}">Издательства</a></td>
     </tr>
   </table>
 {% endblock content %}

@@ -12,7 +12,7 @@
       {% for pub in pubs %}
         <tr>
           <td>
-            <a href="publishers/{{ pub.url }}">{{ pub|stringformat:"r" }}</a>
+            <a href="{% url 'publisher' pub.url %}">{{ pub|stringformat:"r" }}</a>
           </td>
         </tr>
       {% endfor %}

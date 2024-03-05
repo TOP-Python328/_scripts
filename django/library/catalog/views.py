@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from transliterate import translit
 
-from catalog.forms import AddAuthorForm, AddPublisherForm
+from catalog.forms import (
+    AddAuthorForm, 
+    AddPublisherForm, 
+    AddExistingBookToPublisherForm, 
+    AddNewBookToPublisherForm
+)
 from catalog.models import Author, Publisher, Book
 
 
@@ -76,12 +81,36 @@ def publishers(request):
 
 def publisher(request, name: str):
     pub = publishers_cache[name]
+    
+    form1 = AddExistingBookToPublisherForm()
+    form2 = AddNewBookToPublisherForm()
+    
+    if request.method == 'POST':
+        if request.POST['form'] == 'existing':
+            form1 = AddExistingBookToPublisherForm(request.POST)
+            form1.full_clean()
+            book = Book.objects.get(pk=form1.cleaned_data['book_id'])
+            pub.books.add(book)
+            form1 = AddExistingBookToPublisherForm()
+        
+        elif request.POST['form'] == 'new':
+            form2 = AddNewBookToPublisherForm(request.POST)
+            if form2.is_valid():
+                # дописать самостоятельно создание/получение экземпляров автора и книги
+                author = ...
+                book = ...
+                
+                pub.books.add(book)
+                form2 = AddNewBookToPublisherForm()
+    
     return render(
         request,
         'publisher.html',
         {
             'pub': pub,
-            'books': pub.books.all()
+            'books': pub.books.all(),
+            'form1': form1,
+            'form2': form2,
         }
     )
 

@@ -26,8 +26,15 @@ class Book(models.Model):
     class Meta:
         db_table = 'books'
     
-    title = models.CharField(max_length=100)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    title = models.CharField(
+        verbose_name='Название', 
+        max_length=100
+    )
+    author = models.ForeignKey(
+        Author, 
+        verbose_name='Автор', 
+        on_delete=models.CASCADE
+    )
     
     def __repr__(self):
         return self.title

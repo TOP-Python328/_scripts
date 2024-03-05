@@ -4,11 +4,11 @@ from transliterate import translit
 from catalog.models import Author, Publisher, Book
 
 
-authors = {
+authors_cache = {
     translit(author.last_name, 'ru', reversed=True).lower(): author
     for author in Author.objects.order_by('last_name', 'first_name')
 }
-publishers = {
+publishers_cache = {
     translit(pub.name, 'ru', reversed=True).lower(): pub
     for pub in Publisher.objects.order_by('name')
 }
@@ -21,7 +21,7 @@ def main(request):
     )
 
 
-def author_catalog(request):
+def authors(request):
     return render(
         request,
         'authors.html',
@@ -32,7 +32,7 @@ def author_catalog(request):
 
 
 def author(request, name: str):
-    author = authors[name]
+    author = authors_cache[name]
     return render(
         request, 
         'author.html',
@@ -43,7 +43,7 @@ def author(request, name: str):
     )
 
 
-def pubs(request):
+def publishers(request):
     return render(
         request,
         'publishers.html',
@@ -53,8 +53,8 @@ def pubs(request):
     )
 
 
-def pub(request, name: str):
-    pub = publishers[name]
+def publisher(request, name: str):
+    pub = publishers_cache[name]
     return render(
         request,
         'publisher.html',

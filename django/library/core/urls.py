@@ -25,11 +25,11 @@ urlpatterns = [
     
     path('', views.main, name='main'),
     
-    path('authors', views.author_catalog, name='author_catalog'),
+    path('authors', views.authors, name='authors_catalog'),
     path('authors/<str:name>', views.author, name='author'),
     
-    path('publishers', views.pubs, name='pub_catalog'),
-    path('publishers/<str:name>', views.pub, name='publisher'),
+    path('publishers', views.publishers, name='publishers_catalog'),
+    path('publishers/<str:name>', views.publisher, name='publisher'),
     
     path('add_book', views.add_book, name='add_book'),
 ]

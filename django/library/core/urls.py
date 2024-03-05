@@ -30,4 +30,6 @@ urlpatterns = [
     
     path('publishers', views.pubs, name='pub_catalog'),
     path('publishers/<str:name>', views.pub, name='publisher'),
+    
+    path('add_book', views.add_book, name='add_book'),
 ]

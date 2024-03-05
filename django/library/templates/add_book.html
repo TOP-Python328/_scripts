@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <br>
+  <div>
+    {% if added %}
+      <h6>Данные добавлены успешно</h6>
+    {% endif %}
+  </div>
+  <br>
+  <div>
+    <form action="" method="post">
+      {% csrf_token %}
+      <table cellpadding=5>
+        <tr>
+          <th align="right">
+            <label for="id_title">Название:</label>
+          </th>
+          <td>
+            <input type="text" name="title" id="id_title" required>
+          </td>
+        </tr>
+        <tr>
+          <th align="right">
+            <label for="id_author">Автор:</label>
+          </th>
+          <td>
+            <select name="author_id" id="id_author" required>
+              <option disabled selected></option>
+              {% for author in authors %}
+                <option value="{{ author.id }}">{{ author }}</option>
+              {% endfor %}
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2 align="center">
+            <input type="submit" value="Добавить">
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  {% if double %}
+    <br>
+    <div>
+      <em>данная книга уже есть в базе</em>
+    </div>
+  {% endif %}
+{% endblock content %}
+

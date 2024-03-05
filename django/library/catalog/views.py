@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from transliterate import translit
 
-from catalog.models import Author, Publisher
+from catalog.models import Author, Publisher, Book
 
 
 authors = {
@@ -62,5 +62,31 @@ def pub(request, name: str):
             'pub': pub,
             'books': pub.books.all()
         }
+    )
+
+
+def add_book(request):
+    context = {
+        'added': False,
+        'authors': Author.objects.all(),
+        'double': False,
+    }
+    
+    if request.method == 'POST':
+        # print(request.POST)
+        title = request.POST['title']
+        author_id = int(request.POST['author_id'])
+        double = Book.objects.filter(title=title, author_id=author_id)
+        # print(double)
+        if not double:
+            Book(title=title, author_id=author_id).save()
+            context['added'] = True
+        else:
+            context['double'] = True
+    
+    return render(
+        request,
+        'add_book.html',
+        context
     )
 

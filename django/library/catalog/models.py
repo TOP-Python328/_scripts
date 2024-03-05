@@ -38,7 +38,14 @@ class Publisher(models.Model):
         db_table = 'publishers'
     
     id = models.SmallAutoField(primary_key=True)
-    name = models.CharField(max_length=150, unique=True)
+    name = models.CharField(
+        verbose_name='Наименование', 
+        max_length=150, 
+        unique=True,
+        error_messages={
+            'unique': 'такое издательство уже существует'
+        }
+    )
     authors = models.ManyToManyField(Author)
     books = models.ManyToManyField(Book)
     
@@ -48,3 +55,4 @@ class Publisher(models.Model):
     
     def __repr__(self):
         return self.name
+

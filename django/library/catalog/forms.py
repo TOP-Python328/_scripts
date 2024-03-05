@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 from re import compile
 
-from catalog.models import Author
+from catalog.models import Author, Publisher
 
 
 pat_name = compile(r'(?P<name>[A-Za-zА-ЯЁа-яё]{2,})(-(?P=name))?')
@@ -36,4 +36,10 @@ class AddAuthorForm(forms.Form):
                 self.add_error(None, 'такой автор уже существует')
                 return False
         return is_valid
+
+
+class AddPublisherForm(forms.ModelForm):
+    class Meta:
+        model = Publisher
+        fields = ['name']
 

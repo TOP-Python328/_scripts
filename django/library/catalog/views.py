@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from transliterate import translit
 
-from catalog.forms import AddAuthorForm
+from catalog.forms import AddAuthorForm, AddPublisherForm
 from catalog.models import Author, Publisher, Book
 
 
@@ -55,11 +55,21 @@ def author(request, name: str):
 
 
 def publishers(request):
+    if request.method == 'GET':
+        form = AddPublisherForm()
+    
+    elif request.method == 'POST':
+        form = AddPublisherForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form = AddPublisherForm()
+    
     return render(
         request,
         'publishers.html',
         {
-            'pubs': Publisher.objects.order_by('name')
+            'pubs': Publisher.objects.order_by('name'),
+            'form': form,
         }
     )
 

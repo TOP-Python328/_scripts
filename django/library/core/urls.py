@@ -32,4 +32,6 @@ urlpatterns = [
     path('publishers/<str:name>', views.publisher, name='publisher'),
     
     path('add_book', views.add_book, name='add_book'),
+    
+    path('register', views.register, name='register_user'),
 ]

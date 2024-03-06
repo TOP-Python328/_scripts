@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from transliterate import translit
 
 from catalog.forms import (
@@ -8,6 +8,8 @@ from catalog.forms import (
     AddNewBookToPublisherForm
 )
 from catalog.models import Author, Publisher, Book
+
+from django.contrib.auth.forms import UserCreationForm
 
 
 authors_cache = {
@@ -138,5 +140,22 @@ def add_book(request):
         request,
         'add_book.html',
         context
+    )
+
+
+def register(request):
+    if request.method == 'GET':
+        form = UserCreationForm()
+    
+    elif request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('main', permanent=True)
+    
+    return render(
+        request,
+        'register.html',
+        {'form': form}
     )
 

@@ -33,5 +33,7 @@ urlpatterns = [
     
     path('add_book', views.add_book, name='add_book'),
     
-    path('register', views.register, name='register_user'),
+    path('register', views.register, name='user_register'),
+    path('login', views.login, name='user_login'),
+    path('logout', views.logout, name='user_logout'),
 ]

@@ -3,5 +3,10 @@
     <td><a href="{% url 'main' %}">ГЛАВНАЯ</a></td>
     <td><a href="{% url 'authors_catalog' %}">КАТАЛОГ АВТОРОВ</a></td>
     <td><a href="{% url 'publishers_catalog' %}">КАТАЛОГ ИЗДАТЕЛЬСТВ</a></td>
+    {% if user.is_authenticated %}
+      <td>{{ user.username }}, <a href="{% url 'user_logout' %}">выход</a></td>
+    {% else %}
+      <td><a href="{% url 'user_login' %}">вход</a></td>
+    {% endif %}
   </tr>
 </table>
